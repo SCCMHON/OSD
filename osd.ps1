@@ -13,7 +13,7 @@ Connect-MSGraph -ClientSecret $clientSecret | Out-Null
 $Serial = (Get-WmiObject -class win32_bios).SerialNumber
 $GT = Get-AutopilotDevice -serial $Serial | Select-Object -ExpandProperty groupTag
 $GT
-Clear-Host
+#Clear-Host
 Start-Sleep 2
 Write-Host  "*****************************************" -F Yellow
 Write-Host  "*                                       *" -F Yellow
