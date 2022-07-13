@@ -21,3 +21,6 @@ Write-Host  "* " -f Yellow -NoNewline; Write-Host " Current Group TAG is: $GT" -
 Write-Host  "*                                       *" -F Yellow
 Write-Host  "*                                       *" -F Yellow
 Write-Host  "*****************************************" -F Yellow
+
+Write-Output "Please press any key to continue" -F Yellow
+[Console]::ReadKey() | Out-Null
