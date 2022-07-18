@@ -14,7 +14,9 @@ $authority = "https://login.microsoftonline.com/$ourTenantId"
 Update-MSGraphEnvironment -AppId $clientId -Quiet
 Update-MSGraphEnvironment -AuthUrl $authority -Quiet
 Connect-MSGraph -ClientSecret $clientSecret | Out-Null
+$Serial =""
 $Serial = (Get-WmiObject -class win32_bios).SerialNumber
+$GT = ""
 $GT = Get-AutopilotDevice -serial $Serial | Select-Object -ExpandProperty groupTag
 $GT
 #Clear-Host
@@ -27,14 +29,14 @@ Write-Host  "*                                       *" -F Yellow
 Write-Host  "*                                       *" -F Yellow
 Write-Host  "*****************************************" -F Yellow
 
-Write-Host "Please press any key to continue" -F Yellow
-[Console]::ReadKey() | Out-Null
+#Write-Host "Please press any key to continue" -F Yellow
+#[Console]::ReadKey() | Out-Null
 
 #######################################################################################
 
 # Prompt User From Selection
 
-$answer = Read-Host "Would you like to change the current group tag of $Grouptag1 ? Y/N"
+$answer = Read-Host "Would you like to change the current group tag of $GT ? Y/N"
 
 while("y","n" -notcontains $answer)
 {
@@ -84,6 +86,7 @@ $listBox.Height = 80
 [void] $listBox.Items.Add('Azure-EMEA')
 [void] $listBox.Items.Add('Azure-APAC')
 
+$x = ""
 
 $form.Controls.Add($listBox)
 
