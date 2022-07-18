@@ -100,10 +100,8 @@ if ($result -eq [System.Windows.Forms.DialogResult]::OK)
 # Set Group Tag
 
 Write-Host -ForegroundColor Green "Changing Group Tag to $x"
-
-{
 Get-AutopilotDevice -serial $Serial | Set-AutopilotDevice -groupTag $x
-}
+
 }
 else
 {
