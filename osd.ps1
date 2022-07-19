@@ -130,8 +130,7 @@ Write-Host  -ForegroundColor Green "Importing OSD PowerShell Module"
 Import-Module OSD -Force
 
 #URL to custom WIM
-$ImageFileUrl = ""
-
+$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install.wim"
 
 #Start OSDCloud ZTI the RIGHT way
 Write-Host  -ForegroundColor Green "Starting OSDCloud. Please Wait..."
