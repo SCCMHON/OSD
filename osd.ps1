@@ -129,9 +129,15 @@ Install-Module OSD -Force
 Write-Host  -ForegroundColor Green "Importing OSD PowerShell Module"
 Import-Module OSD -Force
 
+#URL to custom WIM
+$ImageFileUrl = ""
+
+
 #Start OSDCloud ZTI the RIGHT way
-Write-Host  -ForegroundColor Green "Start OSDCloud"
-Start-OSDCloud -OSLanguage en-us -OSBuild 21H2 -OSEdition Enterprise -ZTI
+Write-Host  -ForegroundColor Green "Starting OSDCloud. Please Wait..."
+#Start-OSDCloud -OSLanguage en-us -OSBuild 21H2 -OSEdition Enterprise -ZTI
+Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl" -ImageIndex 3 -Verbose
+#Start-OSCloudGUI
 
 #Restart from WinPE
 Write-Host  -ForegroundColor Green "Restarting in 30 seconds!"
