@@ -111,7 +111,48 @@ else
 Write-Host "Not Changing Group Tag. Current tag: $GT " -ForegroundColor Green
 }
 
-########################################################################################
+############## Detect & Remove Existing Intune Device ###########
+
+Write-Host -ForegroundColor Green "Checking For Intune Associated Device..."
+$devicename = ""
+$devicename = Get-IntuneManagedDevice -Filter ("SerialNumber eq '$Serial'") | Select-Object -ExpandProperty deviceName
+
+   if ($devicename)
+   {
+    Write-Host -ForegroundColor Red "Associated Intune Device Found"
+    Write-Host -ForegroundColor Yellow "Associated Intune Device Name: $devicename"
+    # Prompt for removal
+
+$answer2 = Read-Host "Would you like to remove the Associated Intune Device: $devicename ? Y/N"
+
+while("y","n" -notcontains $answer2)
+{
+	$answer2 = Read-Host "y or n"
+}
+if ($answer2 -eq "y")
+{
+Write-Host -ForegroundColor Yellow "Removing Intune Device..."
+$id = Get-AutopilotDevice -serial $Serial | Select-Object -ExpandProperty managedDeviceId
+Remove-IntuneManagedDevice -managedDeviceId $id
+ }
+else
+{
+Write-Host "Not removing device. Skipping" -ForegroundColor Yellow
+}
+}
+
+else
+ {
+     Write-Host -ForegroundColor Green "No Associated Intune Device Found. Continuing Deployment."    
+     }
+
+############### 
+
+# Logging to SQL DB
+
+
+###############
+
 
 Write-Host  -ForegroundColor Green "Starting Honeywell OSDCloud ZTI"
 Start-Sleep -Seconds 5
@@ -130,12 +171,14 @@ Write-Host  -ForegroundColor Green "Importing OSD PowerShell Module"
 Import-Module OSD -Force
 
 #URL to custom WIM
-$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install.wim"
+#$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install.wim" #20H1
+$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install-3-Windows-10-Enterprise.wim" #21H2
 
 #Start OSDCloud ZTI the RIGHT way
 Write-Host  -ForegroundColor Green "Starting OSDCloud. Please Wait..."
-Start-OSDCloud -OSLanguage en-us -OSBuild 21H2 -OSEdition Enterprise -ZTI
-#Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl" -ImageIndex 3 -Verbose
+#Start-OSDCloud -OSLanguage en-us -OSBuild 21H2 -OSEdition Enterprise -ZTI
+Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl" -ImageIndex 3 -Verbose
+
 #Start-OSCloudGUI
 
 #Restart from WinPE
