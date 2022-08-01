@@ -134,12 +134,16 @@ $ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install.wim"
 
 #Start OSDCloud ZTI the RIGHT way
 Write-Host  -ForegroundColor Green "Starting OSDCloud. Please Wait..."
-#Start-OSDCloud -OSLanguage en-us -OSBuild 21H2 -OSEdition Enterprise -ZTI
-Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl" -ImageIndex 3 -Verbose
+Start-OSDCloud -OSLanguage en-us -OSBuild 21H2 -OSEdition Enterprise -ZTI
+#Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl" -ImageIndex 3 -Verbose
 #Start-OSCloudGUI
 
 #Restart from WinPE
-Write-Host  -ForegroundColor Green "Restarting in 30 seconds!"
+
+Write-Host "Image Deployment Complete. Remove any USB Drives and press any key to continue" -F Green
+[Console]::ReadKey() | Out-Null
+
+Write-Host  -ForegroundColor Green "Restarting in 30 seconds! Remove Any USB Drives!"
 Start-Sleep -Seconds 30
 wpeutil reboot
 
