@@ -171,13 +171,16 @@ Write-Host  -ForegroundColor Green "Importing OSD PowerShell Module"
 Import-Module OSD -Force
 
 #URL to custom WIM
-#$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install.wim" #20H1
-$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install-3-Windows-10-Enterprise.wim" #21H2
+#$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install.wim" # Win10 20H1
+#$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/install-3-Windows-10-Enterprise.wim" # Win10 21H2
+$ImageFileUrl = "https://sccmshare.blob.core.windows.net/osd/Win_11_21H2_Index3.wim" # Win11 20H2
 
 #Start OSDCloud ZTI the RIGHT way
 Write-Host  -ForegroundColor Green "Starting OSDCloud. Please Wait..."
+
+Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl"
+#Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl" -ImageIndex 3 -Verbose
 #Start-OSDCloud -OSLanguage en-us -OSBuild 21H2 -OSEdition Enterprise -ZTI
-Start-OSDCloud -ZTI -SkipAutopilot -SkipODT -ImageFileUrl "$ImageFileUrl" -ImageIndex 3 -Verbose
 
 #Start-OSCloudGUI
 
